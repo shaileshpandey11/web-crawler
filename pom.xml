@@ -1,8 +1,17 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.prudential.web.crawler</groupId>
-  <artifactId>web-crawler</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>Prudential Web Crawler</name>
-  <description>Web Crawler is an Internet bot that systematically browses the World Wide Web, typically for the purpose of Web indexing (web spidering).</description>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.prudential.web.crawler</groupId>
+	<artifactId>web-crawler</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Prudential Web Crawler</name>
+	<description>Web Crawler is an Internet bot that systematically browses the World Wide Web, typically for the purpose of Web indexing (web spidering).</description>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency>
+	</dependencies>
 </project>
