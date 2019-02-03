@@ -7,11 +7,21 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Prudential Web Crawler</name>
 	<description>Web Crawler is an Internet bot that systematically browses the World Wide Web, typically for the purpose of Web indexing (web spidering).</description>
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+
 	</dependencies>
 </project>

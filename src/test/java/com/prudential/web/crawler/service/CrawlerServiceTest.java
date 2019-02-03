@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class CrawlerServiceTest {
 
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testCrawl() {
 		CrawlerService service = new CrawlerService();
 		service.crawl(null);

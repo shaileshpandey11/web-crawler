@@ -5,8 +5,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -44,13 +46,17 @@ public class CrawlerService {
 		}
 		try {
 			addAndSubmitURL(new URL(urlToBeCrawled));
+			// Before shutdown, check process is completed or not
+			while (isCrawlingProcessComplete()) {
+				System.out.println("Process is in progress.....");
+			}
 			executorService.shutdown();
 			executorService.awaitTermination(5, TimeUnit.SECONDS);
 		} catch (MalformedURLException e) {
 			System.out.println("URL is malformed" + e.getMessage());
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			System.out.println("An error ouccred while crawling URL" + e.getMessage());
+			System.out.println("An error occurred while crawling URL" + e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -74,5 +80,43 @@ public class CrawlerService {
 	 */
 	public Set<URL> getCrawledURLs() {
 		return new HashSet<>(this.crawledURLs);
+	}
+
+	/**
+	 * Check crawling process is completed or not
+	 *
+	 * @return true if URls are pending to be crawled, false otherwise
+	 * @throws InterruptedException throws InterruptedException if future task times
+	 *                              out
+	 */
+	private boolean isCrawlingProcessComplete() throws InterruptedException {
+
+		Thread.sleep(1000);
+
+		final Set<URL> urlsToBeCrawled = new HashSet<>();
+		final Iterator<Future<Set<URL>>> iterator = output.iterator();
+		Future<Set<URL>> future;
+
+		while (iterator.hasNext()) {
+
+			future = iterator.next();
+
+			if (future.isDone()) {
+
+				iterator.remove();
+
+				try {
+					urlsToBeCrawled.addAll(future.get());
+				} catch (ExecutionException e) {
+					System.err.println("An error occurred while checking process");
+				}
+			}
+		}
+
+		for (final URL urls : urlsToBeCrawled) {
+			addAndSubmitURL(urls);
+		}
+
+		return (output.size() > 0);
 	}
 }
