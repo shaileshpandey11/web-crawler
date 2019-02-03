@@ -21,6 +21,8 @@ public class WebCrawlerExecutorService implements Callable<Set<URL>> {
 	private final URL url;
 	private final Set<URL> resultList = new HashSet<>();
 	private static final int TIME_OUT = 90000;
+	private static final String HASH="#";
+	private static final String HREF="href";
 
 	public WebCrawlerExecutorService(final URL url) {
 		this.url = url;
@@ -43,9 +45,9 @@ public class WebCrawlerExecutorService implements Callable<Set<URL>> {
 				String referenceLinks;
 
 				for (Element page : linksOnPage) {
-					referenceLinks = page.attr("href");
+					referenceLinks = page.attr(HREF);
 
-					if (referenceLinks == null || referenceLinks.isEmpty() || referenceLinks.startsWith("#")) {
+					if (referenceLinks == null || referenceLinks.isEmpty() || referenceLinks.startsWith(HASH)) {
 						continue;
 					}
 
@@ -53,8 +55,8 @@ public class WebCrawlerExecutorService implements Callable<Set<URL>> {
 
 						URL tempURL;
 
-						if (referenceLinks.contains("#")) {
-							tempURL = new URL(url, referenceLinks.substring(0, referenceLinks.indexOf("#")));
+						if (referenceLinks.contains(HASH)) {
+							tempURL = new URL(url, referenceLinks.substring(0, referenceLinks.indexOf(HASH)));
 						} else {
 							tempURL = new URL(this.url, referenceLinks);
 						}
@@ -62,7 +64,7 @@ public class WebCrawlerExecutorService implements Callable<Set<URL>> {
 						this.resultList.add(tempURL);
 
 					} catch (MalformedURLException e) {
-						System.err.println("URL is not proper");
+						System.err.println("Malformed URL "+referenceLinks);
 					}
 				}
 			} catch (IOException e) {
